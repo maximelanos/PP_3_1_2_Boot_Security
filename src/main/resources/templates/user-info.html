@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+    <title>info</title>
+</head>
+<body>
+    <style>
+        .parent {
+            display: flex;
+            justify-content: center;
+            padding-top: 25px;
+        }
+        .inp {
+            margin: auto;
+            width: 600px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+        a { margin: 10px; }
+    </style>
+    <div class="text-center"><h2>Информация о пользователе</h2></div>
+    <div class="parent">
+        <fieldset class="text-right">
+            <form method="get" th:action="@{/admin/user-info}" th:object="${user}">
+                <label>
+                    ID:
+                    <input class="inp" type="text" th:field="*{id}" disabled>
+                </label>
+                <br>
+                <label>
+                    Имя:
+                    <input class="inp" type="text" th:field="*{firstName}" disabled>
+                </label>
+                <br>
+                <label>
+                    Фамилия:
+                    <input class="inp" type="text" th:field="*{lastName}" disabled>
+                </label>
+                <br>
+                <label>
+                    E-mail:
+                    <input class="inp" type="text" th:field="*{email}" disabled>
+                </label>
+                <br>
+                <label>
+                    Логин:
+                    <input class="inp" type="text" th:field="*{username}" disabled>
+                </label>
+                <br>
+                <label>
+                    Пароль:
+                    <input class="inp" type="text" th:field="*{password}" disabled>
+                </label>
+                <br>
+                <label>
+                    Роль:
+                    <input class="inp" type="text" th:field="*{roles}" disabled>
+                </label>
+            </form>
+        </fieldset>
+    </div>
+    <div class="parent">
+        <div sec:authorize="hasAnyRole('ADMIN', 'USER')">
+            <h3><a th:href="@{/index}">На главную</a></h3>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')">
+            <h3><a th:href="@{/admin/user-edit/{id}(id=${user.id})}">Редактировать</a></h3>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')">
+            <h3><a th:href="@{/admin}">На страницу админа</a></h3>
+        </div>
+    </div>
+</body>
+</html>

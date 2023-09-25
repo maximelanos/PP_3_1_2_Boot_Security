@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en">
 <head>
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
 
+    <style>
+        .parent {
+            display: block;
+            text-align: center;
+        }
+        .red {
+            color: #ff0000;
+        }
+        .green {
+            color: #008000;
+        }
+    </style>
+
+    <div class="parent"><h1>Главная страница</h1></div>
+    <br>
+    <br>
+    <br>
+    <div class="parent" sec:authorize="!isAuthenticated()">
+        <h3 class="red">Вы не авторизованы!</h3>
+        <br>
+        <h2><a th:href="@{/login}">Войти в аккаунт</a></h2>
+        <h2><a th:href="@{/registration}">Регистация</a></h2>
+    </div>
+    <div class="parent" sec:authorize="isAuthenticated()">
+        <h3 class="green">Вы успешно прошли аутентификацию!</h3>
+        <br>
+        <h2><a th:href="@{/user}">Мой профиль</a></h2>
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2><a th:href="@{/admin}">На страницу админа</a></h2>
+        </div>
+        <h2><a th:href="@{/logout}">Выйти из аккаунта</a></h2>
+    </div>
 
 </body>
 </html>

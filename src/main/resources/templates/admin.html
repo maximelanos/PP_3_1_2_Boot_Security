@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div>
+    <style>
+        table {
+            border: 2px solid green;
+            margin: auto;
+            text-align: center;
+        }
+        th { width: 200px; }
+        a { margin: 10px; }
+        .parent { text-align: center; }
+    </style>
+
+    <h2 class="parent" th:if="${#lists.isEmpty(users)}">Пользователи не найдены!</h2>
+
+    <div th:unless="${#lists.isEmpty(users)}"><br><br>
+        <h3 class="parent"><a th:href="@{/index}">На главную</a><a th:href="@{/logout}">Выйти из аккаунта</a></h3><br><br>
+        <h2 class="parent">Пользователи</h2>
+
+        <table th:border="1" th:bgcolor="E0FFFF">
+            <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>E-mail</th>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>Роль</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.firstName}">Имя</td>
+                <td th:text="${user.lastName}">Фамилия</td>
+                <td th:text="${user.email}">E-mail</td>
+                <td th:text="${user.username}">Логин</td>
+                <td th:text="${user.password}">Пароль</td>
+                <td th:text="${user.roles}">Роль</td>
+                <td>
+                    <a th:href="@{admin/user-delete/{id}(id=${user.id})}">Удалить</a><br>
+                    <a th:href="@{admin/user-info/{id}(id=${user.id})}">Профиль пользователя</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
