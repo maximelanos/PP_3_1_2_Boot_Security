@@ -1,87 +1,60 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>Регистрация</title>
 </head>
-<body>
-<style>
-    table {
-        border: 2px solid green;
-        margin: auto;
-        text-align: center;
-    }
-    .parent {
-        display: flex;
-        justify-content: center;
-        padding-top: 50px;
-    }
-    .text-right {
-        text-align: right;
-    }
-    .text-left {
-        text-align: left;
-        color: #dc143c;
-    }
-    .text-center {
-        text-align: center;
-    }
-    .btn {
-        text-align: center;
-        margin: 10px;
-        height: 30px;
-        width: 200px;
-        font-size: 15px;
-        background-color: #e0ffff;
-    }
-    .h {
-        display: flex;
-        justify-content: center;
-        padding-top: 100px;
-    }
-</style>
-<h2 class="h">Заполните форму регистрации</h2>
-<div class="parent">
-    <form action="#" th:action="@{/registration}" th:object="${user}" th:method="POST">
-        <table th:border="1" th:bgcolor="e0ffff">
-            <tr class="text-right">
-                <th><label for="firstName">Имя:</label></th>
-                <th><input type="text" th:field="*{firstName}" id="firstName" placeholder="Имя"></th>
-                <th class="text-left"><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></th>
-            </tr>
-            <tr class="text-right">
-                <th><label for="lastName">Фамилия:</label></th>
-                <th><input type="text" th:field="*{lastName}" id="lastName" placeholder="Фамилия"></th>
-                <th class="text-left"><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></th>
-            </tr>
-            <tr class="text-right">
-                <th><label for="email">E-mail:</label></th>
-                <th><input type="text" th:field="*{email}" id="email" placeholder="E-mail"></th>
-                <th class="text-left"><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></th>
-            </tr>
-            <tr class="text-right">
-                <th><label for="username">Логин:</label></th>
-                <th><input type="text" th:field="*{username}" id="username" placeholder="Логин"></th>
-                <th class="text-left" th:text="${usernameError}"></th>
-            </tr>
-            <tr class="text-right">
-                <th><label for="password">Пароль:</label></th>
-                <th><input type="password" th:field="*{password}" id="password" placeholder="Пароль"></th>
-                <th class="text-left"><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></th>
-            </tr>
-            <tr class="text-right">
-                <th><label for="passwordConfirm">Повторите пороль:</label></th>
-                <th><input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Повторите пароль"></th>
-                <th class="text-left" th:text="${passwordError}"></th>
-            </tr>
-            <th class="text-right"><label>Роль:</label></th>
-            <th>
-                <label class="display"><input type="checkbox" name="roles" th:value="ROLE_ADMIN">ADMIN</label>
-                <label class="display"><input type="checkbox" name="roles" th:value="ROLE_USER" checked>USER</label>
-            </th>
-        </table>
-        <div class="text-center"><input class="btn" type="submit" value="Зарегистрироваться"></div>
-    </form>
+<body style="background-color: LightSteelBlue">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4 border rounded-3 p-4 mt-5 bg-white">
+            <form class="form-signIn" th:method="post" th:action="@{/registration}" th:object="${user}"
+                  oninput='passwordConfirm.setCustomValidity(passwordConfirm.value != password.value ? "Пароли не совпадают" : "")'>
+                <h2 class="form-signIn-heading">Регистрация</h2>
+                <br>
+                <p>
+                    <input class="form-control" type="text" th:field="*{firstName}" id="firstName" placeholder="Имя" required autofocus>
+                </p>
+                <p>
+                    <input class="form-control" type="text" th:field="*{lastName}" id="lastName" placeholder="Фамилия" required>
+                </p>
+                <p>
+                    <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="E-mail">
+                </p>
+                <p>
+                    <input class="form-control" type="text" th:field="*{username}" id="username" placeholder="Имя пользователя" required>
+                </p>
+                <p>
+                    <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Пароль" required>
+                </p>
+                <p>
+                    <input class="form-control" type="password" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Повторите пароль" required>
+                </p>
+                <div>
+                    <br>
+                    <label for="validationDefaultRoles" class="form-label"><b>Добавьте роль</b></label>
+                    <select name="roles" class="form-select" multiple size="2" id="validationDefaultRoles" required>
+                        <option value="ROLE_ADMIN">ADMIN</option>
+                        <option value="ROLE_USER">USER</option>
+                    </select>
+                </div>
+                <div class="w-100">
+                    <br>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button class="btn btn-lg btn-primary btn-block w-100" type="submit">Зарегистрироваться</button>
+                </div>
+                <br>
+                <div class="col my-auto text-end">
+                    <h5><a th:href="@{/login}" style="text-decoration: none">Войти</a></h5>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-</body>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script></body>
 </html>
