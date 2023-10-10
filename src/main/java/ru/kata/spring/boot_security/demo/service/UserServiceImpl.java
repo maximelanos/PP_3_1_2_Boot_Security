@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean saveUserUpdate(User user) {
+    public boolean saveUserUpdate(User user, Long id) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
         return true;

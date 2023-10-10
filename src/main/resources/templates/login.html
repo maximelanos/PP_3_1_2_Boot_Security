@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Вход в систему</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<body style="background-color: LightSteelBlue">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4 border rounded-3 p-4 mt-5 bg-white">
+                <form class="form-signIn" th:method="post" th:action="@{/login}">
+                    <h2 class="form-signIn-heading">Пожалуйста войдите</h2>
+                    <br>
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger" role="alert">Неправильное имя пользователя или пароль</div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info" role="alert">Вы успешно вышли из системы</div>
+                    </div>
+                    <p>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Имя пользователя" required autofocus>
+                    </p>
+                    <p>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
+                    </p>
+                    <div class="w-100">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button class="btn btn-lg btn-primary btn-block w-100" type="submit">Войти</button>
+                    </div>
+                    <br>
+                    <div class="col my-auto text-end">
+                        <h5><a th:href="@{/registration}" style="text-decoration: none">Регистрация</a></h5>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+</body>
+</html>

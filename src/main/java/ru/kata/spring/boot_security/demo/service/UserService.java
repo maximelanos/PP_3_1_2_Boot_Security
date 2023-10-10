@@ -10,6 +10,6 @@ public interface UserService {
     List<User> findAll();
     boolean saveUser(User user);
     User read(Long id);
-    boolean saveUserUpdate(User user);
+    boolean saveUserUpdate(User user, Long id);
     User delete(Long id);
 }
