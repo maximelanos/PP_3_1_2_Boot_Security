@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     public boolean saveUser(User user) {
         User userFromDB = userDao.getUserByUsername(user.getUsername());
 
+        System.out.println("userFromDB: " + userFromDB);
         if (userFromDB != null) {
             return false;
         }

@@ -19,12 +19,7 @@
     <div class="container-fluid bg-dark">
         <div class="row flex-lg-nowrap pt-2">
             <div class="col-lg-11 text-white me-auto">
-                <h5>
-                    <span th:text="${userPrincipal.email} "></span>
-                    <span> с ролями: </span>
-                    <span th:each= "role:${userRoles}"
-                          th:text="${role.name.replace('ROLE_','')}+' '"></span>
-                </h5>
+                <h5 id="principal"></h5>
             </div>
             <div class="col-lg-1 ms-auto text-end">
                 <a class="text-white-50" th:href="@{/logout}">Выйти</a>
@@ -63,22 +58,7 @@
                                 <th>Роль</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr class="align-middle">
-                                <td th:text="${userPrincipal.id}"></td>
-                                <td th:text="${userPrincipal.firstName}"></td>
-                                <td th:text="${userPrincipal.lastName}"></td>
-                                <td th:text="${userPrincipal.email}"></td>
-                                <td th:text="${userPrincipal.username}"></td>
-                                <td>
-                                    <span th:each="role : ${userPrincipal.roles}"
-                                          th:switch="${role.name}">
-                                          <span th:case="'ROLE_USER'">USER</span>
-                                          <span th:case="'ROLE_ADMIN'">ADMIN</span>
-                                    </span>
-                                </td>
-                            </tr>
-                            </tbody>
+                            <tbody id="userInfo"></tbody>
                         </table>
                     </div>
 
@@ -89,4 +69,6 @@
 </div>
 
 <script th:src="@{/js/bootstrap.bundle.min.js}" ></script></body>
+<script th:src="@{/js/user.js}" ></script></body>
+<script th:src="@{/js/getRole.js}"></script>
 </html>

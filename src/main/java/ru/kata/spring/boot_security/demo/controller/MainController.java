@@ -60,4 +60,15 @@ public class MainController {
 
         return "login";
     }
+
+    @GetMapping("/admin")
+    public String showAllUser(Model model) {
+        model.addAttribute("newUser", new User());
+        return "admin";
+    }
+
+    @GetMapping("/user")
+    public String showOneUser() {
+        return "user-info";
+    }
 }
